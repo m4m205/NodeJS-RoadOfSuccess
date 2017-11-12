@@ -30,7 +30,7 @@ const doLogin = ( req, res ) => {
 
     User.findOne({email: req.body.email}).then(user => {
         if(user) {
-      
+
             bcrypt.compare(req.body.passwd, user.password, function(err, result) {
                 if(result) {
                     req.session.user = user;
@@ -64,11 +64,11 @@ var validateRegister = () => {
                   .custom( (value, {req}) => value === req.body.passwd)
         ];
 };
-var eValidate = () => {
+var editValidate = () => {
     return [
             check('name', 'Please enter your full name.').not().isEmpty(),
             check('email', 'Your email is not valid').isEmail(),
-            check('email', 'Your email is already exist, try another one.')
+            check('email', 'This email is already exist, try another one.')
                   .custom( (value, {req}) => User.getByEmailButNotSameId(value, req.params.id).then(user => !user)),
             check('passwd', 'Your password should be between 6 and 16 chars.')
                   .trim().custom( value => {
@@ -215,5 +215,5 @@ module.exports = {
     validateRegister: validateRegister(),
     edit:      edit,
     edtForm:   admForm,
-    eValidate: eValidate(),
+    editValidate: editValidate(),
 };

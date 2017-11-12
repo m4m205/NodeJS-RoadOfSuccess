@@ -14,7 +14,7 @@ router.get('/user/delete/:id', Users.remove);
 router.get('/user',      Users.addForm);
 router.post('/user',     Users.validateRegister, Users.add);
 router.get('/user/:id',  Users.edtForm);
-router.post('/user/:id', Users.eValidate, Users.edit);
+router.post('/user/:id', Users.editValidate, Users.edit);
 router.get('/users',     Users.admList);
 
 
@@ -23,6 +23,8 @@ router.get('/setting', Site.admSetting);
 router.post('/setting', Site.save);
 
 // Dashboard
+router.post('/bundel', Pages.makeBundel);
+router.get('/bundel', Pages.viewBundel);
 router.get('/', Pages.admDashboard);
 
 

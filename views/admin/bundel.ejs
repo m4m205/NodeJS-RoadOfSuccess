@@ -1,0 +1,23 @@
+<%- include('../includes/admin/header',{page_title: 'User Managment'}); %>
+
+
+      <script src="//cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+
+			<!-- /col-3 -->
+  			<div class="col-sm-9">
+
+					<div class="col-md-12">
+
+              <p>Create a Bundel</p>
+              <form method="post" action="/admin/bundel" name="bundel" >
+                <textarea name="bundelEditor" > </textarea>
+                <script>CKEDITOR.replace( 'bundelEditor' );</script>
+                <input type="submit" name="Submit" class="btn btn-success" />
+              </form>
+					</div>
+        </div>
+
+        <p><img alt="" src="https://openclipart.org/image/2400px/svg_to_png/239997/TJ-Openclipart-8-character-Hi-4-2-16-png-.png" style="height:240px; width:240px" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2 style="font-style:italic;">test test&nbsp;</h2>\r\n\r\n<h1>Mahmoud</h1>\r\n
+
+            <!--/col-span-9-->
+<%- include('../includes/admin/footer'); %>
