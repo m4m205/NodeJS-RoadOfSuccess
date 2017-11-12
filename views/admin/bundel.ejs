@@ -1,15 +1,19 @@
 <%- include('../includes/admin/header',{page_title: 'User Managment'}); %>
 
 
-      <script src="//cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
+      <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
 
 			<!-- /col-3 -->
   			<div class="col-sm-9">
 
 					<div class="col-md-12">
 
-              <p>Create a Bundel</p>
-              <form method="post" action="/admin/bundel" name="bundel" >
+              <h3>Create a Bundel:</h3>
+              <form method="post" action="/admin/bundel" name="bundel">
+                <h4>Name of the bundel</h4>
+                <input name="bundelName" type="text"/>
+                <h4>Publish date</h4>
+                <input name="publishDate" type="date"/>
                 <textarea name="bundelEditor" > </textarea>
                 <script>CKEDITOR.replace( 'bundelEditor' );</script>
                 <input type="submit" name="Submit" class="btn btn-success" />
@@ -17,7 +21,6 @@
 					</div>
         </div>
 
-        <p><img alt="" src="https://openclipart.org/image/2400px/svg_to_png/239997/TJ-Openclipart-8-character-Hi-4-2-16-png-.png" style="height:240px; width:240px" /></p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<h2 style="font-style:italic;">test test&nbsp;</h2>\r\n\r\n<h1>Mahmoud</h1>\r\n
 
             <!--/col-span-9-->
 <%- include('../includes/admin/footer'); %>
