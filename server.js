@@ -1,7 +1,8 @@
 // Packages
 const express    = require('express');
 const path       = require('path');
-const mysql      = require('mysql');
+// const mysql      = require('mysql');
+const mongoose   = require('mongoose');
 const bodyParser = require('body-parser');
 const cors       = require('cors');
 const session    = require('express-session');
@@ -9,8 +10,16 @@ const session    = require('express-session');
 // Shahrokh Library
 const core = require('./core');
 
-// MySQL Connection
-global.db = require('./db');
+// MongoDB Connection
+mongoose.Promise = global.Promise;
+mongoose.connect("mongodb://localhost/roadToSuccess", {useMongoClient: true})
+        .then( () => { // check db connection
+            console.log('MongoDB has been conneted');
+        })
+        .catch( err => { //Check for db errors
+            console.log(`There is an error: ${err}`);
+        });
+
 
 // Create express server
 const app = express();

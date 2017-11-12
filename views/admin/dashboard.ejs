@@ -1,0 +1,26 @@
+<%- include('../includes/admin/header',{page_title: 'User Managment'}); %>
+			<!-- /col-3 -->
+			<div class="col-sm-9">
+
+				<h4 class="title">
+					<strong><i class="glyphicon glyphicon-user"></i> Users</strong>
+					<% if( !locals.list ) { %>
+						<a href="/admin/users" class="btn btn-primary btn-sm pull-right">List</a>
+						<% if( !!locals.item ) { %>
+						<a href="/admin/user" class="btn btn-primary btn-sm pull-right">Add New</a>
+						<% } %>
+					<% } else { %>
+						<a href="/admin/user" class="btn btn-primary btn-sm pull-right">Add New</a>
+					<% } %>
+				</h4>
+				<hr>
+
+
+				<div class="row">
+					<div class="col-md-12">
+welcome
+
+					</div>
+        </div>
+            <!--/col-span-9-->
+<%- include('../includes/admin/footer'); %>

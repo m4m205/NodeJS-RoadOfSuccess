@@ -12,7 +12,7 @@ router.post('/login', Users.lValidate(), Users.doLogin);
 
 router.get('/user/delete/:id', Users.remove);
 router.get('/user',      Users.addForm);
-router.post('/user',     Users.aValidate, Users.add);
+router.post('/user',     Users.validateRegister, Users.add);
 router.get('/user/:id',  Users.edtForm);
 router.post('/user/:id', Users.eValidate, Users.edit);
 router.get('/users',     Users.admList);
