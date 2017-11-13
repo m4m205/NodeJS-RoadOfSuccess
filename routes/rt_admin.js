@@ -39,7 +39,7 @@ router.get('/bundel/files', Pages.showImage);
 router.post('/bundel/delete_file', Pages.deleteImage)
 
 //Media display
-router.get('/gallery', Pages.displayMedia)
+router.get('/media', Pages.showMedia)
 
 
 module.exports = router;

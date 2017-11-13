@@ -1,23 +1,21 @@
 const bundel = require('../models/mdl_bundel');
 const {check, validationResult} = require('express-validator/check');
-<<<<<<< HEAD
+
 var fs = require('fs');
 
-=======
+
 // const filemanager = require ('../filemanager.config.json')
->>>>>>> 94af64310c7633dd33b9ab4da96036b211281ee3
 
 const admDashboard = ( req, res ) => {
     if( req.userAuth('/admin/login') ) return;
     res.render('admin/dashboard');
-<<<<<<< HEAD
 };
 
-const viewBundel = (req , res ) => {
-    if( req.userAuth('/admin/login') ) return;
-    var title = "Plugin Imagebrowser ckeditor for nodejs"
-    res.render('admin/bundel', { result: 'result' })
-}
+// const viewBundel = (req , res ) => {
+//     if( req.userAuth('/admin/login') ) return;
+//     var title = "Plugin Imagebrowser ckeditor for nodejs"
+//     res.render('admin/bundel', { result: 'result' })
+// }
 
 //show all the images in upload to json
 const showImage = (req , res ) => {
@@ -46,18 +44,13 @@ const deleteImage = (req , res, next ) => {
     fs.unlinkSync(url_del)
   }
   res.redirect('back');
-=======
+
 }
+
 const viewBundel = (req , res ) => {
     if( req.userAuth('/admin/login') ) return;
-    res.render('admin/bundel' , {filemanager});
->>>>>>> 94af64310c7633dd33b9ab4da96036b211281ee3
-}
-
-//Diaplay Media
-
-const displayMedia = (req,res) =>{
-  res.render('admin/media');
+    var title = "Plugin Imagebrowser ckeditor for nodejs"
+    res.render('admin/bundel', { result: 'result' })
 }
 
 
@@ -87,19 +80,11 @@ const showMedia = (req ,res)=>{
 }
 
 
-
-
-
 module.exports = {
     admDashboard: admDashboard,
     viewBundel: viewBundel,
     makeBundel: makeBundel,
-<<<<<<< HEAD
     showImage:showImage,
     deleteImage:deleteImage,
-    displayMedia: displayMedia
-=======
-    showMedia: showMedia
-
->>>>>>> 94af64310c7633dd33b9ab4da96036b211281ee3
+    showMedia:showMedia
 };
