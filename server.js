@@ -1,7 +1,6 @@
 // Packages
 const express    = require('express');
 const path       = require('path');
-// const mysql      = require('mysql');
 const mongoose   = require('mongoose');
 const bodyParser = require('body-parser');
 const cors       = require('cors');
@@ -10,6 +9,8 @@ const session    = require('express-session');
 var multer  =   require('multer');
 var fs = require('fs')
 var crypto = require('crypto');
+
+
 
 // Shahrokh Library
 const core = require('./core');
@@ -74,7 +75,7 @@ app.post('/admin/bundel/upload', upload.array('flFileUpload', 12), function (req
 
 // Routes
 app.use('/admin', require('./routes/rt_admin'));
-
+app.use('/api', require('./routes/rt_api'));
 // Listen to port
 const port = process.argv[2] || process.env.port || 3500;
 app.listen( port, () => {

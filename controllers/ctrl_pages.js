@@ -1,11 +1,16 @@
-// const User = require('../models/mdl_user');
+const bundel = require('../models/mdl_bundel');
 const {check, validationResult} = require('express-validator/check');
+<<<<<<< HEAD
 var fs = require('fs');
 
+=======
+// const filemanager = require ('../filemanager.config.json')
+>>>>>>> 94af64310c7633dd33b9ab4da96036b211281ee3
 
 const admDashboard = ( req, res ) => {
     if( req.userAuth('/admin/login') ) return;
     res.render('admin/dashboard');
+<<<<<<< HEAD
 };
 
 const viewBundel = (req , res ) => {
@@ -41,6 +46,12 @@ const deleteImage = (req , res, next ) => {
     fs.unlinkSync(url_del)
   }
   res.redirect('back');
+=======
+}
+const viewBundel = (req , res ) => {
+    if( req.userAuth('/admin/login') ) return;
+    res.render('admin/bundel' , {filemanager});
+>>>>>>> 94af64310c7633dd33b9ab4da96036b211281ee3
 }
 
 //Diaplay Media
@@ -52,15 +63,43 @@ const displayMedia = (req,res) =>{
 
 const makeBundel = (req , res ) => {
     if( req.userAuth('/admin/login') ) return;
-    console.log(req.body);
+
+    let newBundel = new bundel({
+      name:         req.body.bundelName,
+      bundelEditor: req.body.bundelEditor ,
+      publish_date: req.body.publishDate,
+      frontEndDesc: req.body.frontEndDesc
+    });
+
+    newBundel.save().then(newBundel=>{
+
+
+    })
+    .catch(err=>{
+      res.end('You have error in making bundel!!!')
+    })
 }
+
+// show Media
+const showMedia = (req ,res)=>{
+    if( req.userAuth('/admin/login') ) return;
+    res.render('admin/media');
+}
+
+
+
 
 
 module.exports = {
     admDashboard: admDashboard,
     viewBundel: viewBundel,
     makeBundel: makeBundel,
+<<<<<<< HEAD
     showImage:showImage,
     deleteImage:deleteImage,
     displayMedia: displayMedia
+=======
+    showMedia: showMedia
+
+>>>>>>> 94af64310c7633dd33b9ab4da96036b211281ee3
 };

@@ -1,22 +1,54 @@
 <%- include('../includes/admin/header',{page_title: 'User Managment'}); %>
 
+<<<<<<< HEAD
       <script src="/ckeditor/ckeditor.js"></script>
       <!-- <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script> -->
+=======
+
+      <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+          <!-- <script src="/ckeditor/ckeditor.js"></script> -->
+          <!-- <script src="https://cdn.ckeditor.com/ckeditor5/1.0.0-alpha.1/classic/ckeditor.js"></script> -->
+>>>>>>> 94af64310c7633dd33b9ab4da96036b211281ee3
 
 			<!-- /col-3 -->
   			<div class="col-sm-9">
 
+
 					<div class="col-md-12">
 
               <h3>Create a Bundel:</h3>
-              <form method="post" action="/admin/bundel" name="bundel">
+              <form class="form-horizontal" method="post" action="/admin/bundel" name="bundel">
                 <h4>Name of the bundel</h4>
-                <input name="bundelName" type="text"/>
+                <input class="form-group" name="bundelName" type="text"/>
+                <h4>Short Description</h4>
+                <input class="form-group" name="frontEndDesc" type="text"/>
+                <select class="form-group" required="true" >
+                  <option>Drenthe</option>
+                  <option>Flevoland</option>
+                  <option>Friesland</option>
+                  <option>Gelderland</option>
+                  <option>Groningen</option>
+                  <option>Limburg</option>
+                  <option>North Brabant</option>
+                  <option>North Holland</option>
+                  <option>Overijssel</option>
+                  <option>South Holland</option>
+                  <option>Utrecht</option>
+                  <option>Zeeland</option>
                 <h4>Publish date</h4>
+<<<<<<< HEAD
                 <input name="publishDate" type="date"/>
                 <textarea name="bundelEditor"id="editor1" > </textarea>
                 <!-- <script>CKEDITOR.replace( 'bundelEditor' );</script> -->
                 <input type="submit" name="Submit" class="btn btn-success" />
+=======
+                <input class="form-group" name="publishDate" type="date"/>
+                <textarea  class="form-group" rows="30" name="bundelEditor" id="bundelEditor" > </textarea>
+                <script>CKEDITOR.replace( 'bundelEditor')
+                      // , filebrowserBrowseUrl: "[Path to Filemanager]/index.html" });
+                </script>
+                <input class="form-group" type="submit" name="Submit" class="btn btn-success" />
+>>>>>>> 94af64310c7633dd33b9ab4da96036b211281ee3
               </form>
 
               <script type="text/javascript">
@@ -28,6 +60,16 @@
 					</div>
         </div>
 
+        <!-- <script>
+          ClassicEditor
+            .create( document.querySelector( '#bundelEditor' ) )
+            .then( editor => {
+              console.log( editor );
+            } )
+            .catch( error => {
+              console.error( error );
+            } );
+        </script> -->
 
             <!--/col-span-9-->
 <%- include('../includes/admin/footer'); %>

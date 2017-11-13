@@ -1,3 +1,7 @@
 
 **/node_modules/**
 .DS_Store
+controllers/ctrl_pages.js
+controllers/ctrl_pages.js
+views/admin/bundel.ejs
+views/admin/media.ejs
