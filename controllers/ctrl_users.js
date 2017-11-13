@@ -2,6 +2,7 @@ const User = require('../models/mdl_user');
 const {check, validationResult} = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 
+
 // Validation for login
 const validateLogin = () => {
     return [
@@ -202,12 +203,12 @@ const remove = ( req, res ) => {
         .catch( err => console.log(err) );
 };
 
+
 module.exports = {
     admLogin:  admLogin,
     doLogin:   doLogin,
     doLogout:  doLogout,
     lValidate: validateLogin,
-
     admList:   admList,
     remove:    remove,
     add:       add,

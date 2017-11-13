@@ -7,7 +7,7 @@
 
 			<!-- /col-3 -->
   			<div class="col-sm-9">
-          
+
 
 					<div class="col-md-12">
 
@@ -30,12 +30,12 @@
                   <option>South Holland</option>
                   <option>Utrecht</option>
                   <option>Zeeland</option>
-                  <option>13</option>
-                  <option>14</option>
                 <h4>Publish date</h4>
                 <input class="form-group" name="publishDate" type="date"/>
                 <textarea  class="form-group" rows="30" name="bundelEditor" id="bundelEditor" > </textarea>
-                <script>CKEDITOR.replace( 'bundelEditor' );</script>
+                <script>CKEDITOR.replace( 'bundelEditor')
+                      // , filebrowserBrowseUrl: "[Path to Filemanager]/index.html" });
+                </script>
                 <input class="form-group" type="submit" name="Submit" class="btn btn-success" />
               </form>
 					</div>

@@ -39,5 +39,7 @@ const showBundel= (req , res ) => {
 
 module.exports = {
   showBundel: showBundel,
-  listInProvince: listInProvince
+  listInProvince: listInProvince,
+  interviewedLocation:interviewedLocation
+
 }

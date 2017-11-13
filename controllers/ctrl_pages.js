@@ -1,6 +1,6 @@
 const bundel = require('../models/mdl_bundel');
 const {check, validationResult} = require('express-validator/check');
-
+// const filemanager = require ('../filemanager.config.json')
 
 const admDashboard = ( req, res ) => {
     if( req.userAuth('/admin/login') ) return;
@@ -8,7 +8,7 @@ const admDashboard = ( req, res ) => {
 }
 const viewBundel = (req , res ) => {
     if( req.userAuth('/admin/login') ) return;
-    res.render('admin/bundel');
+    res.render('admin/bundel' , {filemanager});
 }
 
 const makeBundel = (req , res ) => {
@@ -30,6 +30,12 @@ const makeBundel = (req , res ) => {
     })
 }
 
+// show Media
+const showMedia = (req ,res)=>{
+    if( req.userAuth('/admin/login') ) return;
+    res.render('admin/media');
+}
+
 
 
 
@@ -38,4 +44,6 @@ module.exports = {
     admDashboard: admDashboard,
     viewBundel: viewBundel,
     makeBundel: makeBundel,
+    showMedia: showMedia
+
 };
