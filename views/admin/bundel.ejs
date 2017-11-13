@@ -1,7 +1,7 @@
 <%- include('../includes/admin/header',{page_title: 'User Managment'}); %>
 
-
-      <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script>
+      <script src="/ckeditor/ckeditor.js"></script>
+      <!-- <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script> -->
 
 			<!-- /col-3 -->
   			<div class="col-sm-9">
@@ -14,10 +14,17 @@
                 <input name="bundelName" type="text"/>
                 <h4>Publish date</h4>
                 <input name="publishDate" type="date"/>
-                <textarea name="bundelEditor" > </textarea>
-                <script>CKEDITOR.replace( 'bundelEditor' );</script>
+                <textarea name="bundelEditor"id="editor1" > </textarea>
+                <!-- <script>CKEDITOR.replace( 'bundelEditor' );</script> -->
                 <input type="submit" name="Submit" class="btn btn-success" />
               </form>
+
+              <script type="text/javascript">
+              CKEDITOR.replace('editor1', {
+                "extraPlugins" : 'imagebrowser',
+            		"imageBrowser_listUrl" : "/admin/bundel/files"
+              });
+            </script>
 					</div>
         </div>
 

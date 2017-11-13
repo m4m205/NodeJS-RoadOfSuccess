@@ -6,6 +6,10 @@ const mongoose   = require('mongoose');
 const bodyParser = require('body-parser');
 const cors       = require('cors');
 const session    = require('express-session');
+//File uploads
+var multer  =   require('multer');
+var fs = require('fs')
+var crypto = require('crypto');
 
 // Shahrokh Library
 const core = require('./core');
@@ -23,6 +27,19 @@ mongoose.connect("mongodb://localhost/roadToSuccess", {useMongoClient: true})
 
 // Create express server
 const app = express();
+
+//Adding config multer
+//folder public/upload for uploading file
+var storage = multer.diskStorage({
+  destination: 'public/upload/',
+  filename: function (req, file, cb) {
+    crypto.pseudoRandomBytes(16, function (err, raw) {
+      if (err) return cb(err)
+      cb(null, Math.floor(Math.random()*9000000000) + 1000000000 + path.extname(file.originalname))
+    })
+  }
+})
+var upload = multer({ storage: storage });
 
 // Load Views
 app.set('views', path.join(__dirname, 'views'));
@@ -48,6 +65,12 @@ app.use(session({
 
 // My Core Functions
 app.use('*', core.pathUserSession);
+
+//upload image to the folder upload
+app.post('/admin/bundel/upload', upload.array('flFileUpload', 12), function (req, res, next) {
+    if( req.userAuth('/admin/login') ) return;
+    res.redirect('back')
+});
 
 // Routes
 app.use('/admin', require('./routes/rt_admin'));

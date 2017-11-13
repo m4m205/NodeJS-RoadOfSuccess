@@ -27,5 +27,12 @@ router.post('/bundel', Pages.makeBundel);
 router.get('/bundel', Pages.viewBundel);
 router.get('/', Pages.admDashboard);
 
+//Media manager Routes
+router.get('/bundel/files', Pages.showImage);
+router.post('/bundel/delete_file', Pages.deleteImage)
+
+//Media display
+router.get('/gallery', Pages.displayMedia)
+
 
 module.exports = router;
