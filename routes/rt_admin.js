@@ -20,7 +20,9 @@ router.post('/user',     Users.validateRegister, Users.add);
 router.get('/user/:id',  Users.edtForm);
 router.post('/user/:id', Users.editValidate, Users.edit);
 router.get('/users',     Users.admList);
-router.get('/media',     Users.showMedia);
+
+// Pages Operations
+router.get('/media',     Pages.showMedia);
 
 
 // Setting
