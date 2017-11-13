@@ -7,6 +7,9 @@ const bodyParser = require('body-parser');
 const cors       = require('cors');
 const session    = require('express-session');
 
+
+
+
 // Shahrokh Library
 const core = require('./core');
 
@@ -51,7 +54,7 @@ app.use('*', core.pathUserSession);
 
 // Routes
 app.use('/admin', require('./routes/rt_admin'));
-
+app.use('/api', require('./routes/rt_api'));
 // Listen to port
 const port = process.argv[2] || process.env.port || 3500;
 app.listen( port, () => {
