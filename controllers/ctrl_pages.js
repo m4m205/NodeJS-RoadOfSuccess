@@ -63,10 +63,8 @@ const makeBundel = (req , res ) => {
       publish_date: req.body.publishDate,
       frontEndDesc: req.body.frontEndDesc
     });
-
+   console.log(newBundel);
     newBundel.save().then(newBundel=>{
-
-
     })
     .catch(err=>{
       res.end('You have error in making bundel!!!')
@@ -79,6 +77,13 @@ const showMedia = (req ,res)=>{
     res.render('admin/media');
 }
 
+// bundle display
+const bundleDisplayer = (req ,res)=>{
+    if( req.userAuth('/admin/login') ) return;
+    res.render('admin/bundleDisplay');
+}
+
+
 
 module.exports = {
     admDashboard: admDashboard,
@@ -86,5 +91,6 @@ module.exports = {
     makeBundel: makeBundel,
     showImage:showImage,
     deleteImage:deleteImage,
-    showMedia:showMedia
+    showMedia:showMedia,
+    bundleDisplayer:bundleDisplayer
 };

@@ -14,12 +14,16 @@
 
 					<div class="col-md-12">
 
+            <h3>Bundle Displayer</h3>
+            <a href="/admin/bundle/display" class="btn btn-primary">button</a>
+
               <h3>Create a Bundel:</h3>
               <form class="form-horizontal" method="post" action="/admin/bundel" name="bundel">
                 <h4>Name of the bundel</h4>
                 <input class="form-group" name="bundelName" type="text"/>
                 <h4>Short Description</h4>
                 <input class="form-group" name="frontEndDesc" type="text"/>
+                <br />
                 <select class="form-group" required="true" >
                   <option>Drenthe</option>
                   <option>Flevoland</option>
@@ -33,18 +37,13 @@
                   <option>South Holland</option>
                   <option>Utrecht</option>
                   <option>Zeeland</option>
+                  
                 <h4>Publish date</h4>
 
                 <input name="publishDate" type="date"/>
                 <textarea name="bundelEditor"id="editor1" > </textarea>
                 <!-- <script>CKEDITOR.replace( 'bundelEditor' );</script> -->
-
-
-
-
-
-                     <!-- , filebrowserBrowseUrl: "[Path to Filemanager]/index.html" }) -->
-
+                <!-- , filebrowserBrowseUrl: "[Path to Filemanager]/index.html" }) -->
                 <input class="form-group" type="submit" name="Submit" class="btn btn-success" />
               </form>
 

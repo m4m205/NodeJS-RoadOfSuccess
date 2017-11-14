@@ -41,5 +41,7 @@ router.post('/bundel/delete_file', Pages.deleteImage)
 //Media display
 router.get('/media', Pages.showMedia)
 
+//Bundle display
+router.get('/bundle/display', Pages.bundleDisplayer )
 
 module.exports = router;
