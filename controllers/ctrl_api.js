@@ -39,12 +39,16 @@ const showBundel= (req , res ) => {
 
 const listOfPages= (req , res ) => {
 
-}  
+}
+const getSettings= (req , res ) => {
+
+}
 
 module.exports = {
   showBundel: showBundel,
   listInProvince: listInProvince,
   interviewedLocation:interviewedLocation,
-  listOfPages: listOfPages
+  listOfPages: listOfPages,
+  getSettings: getSettings
 
 }

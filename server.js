@@ -5,7 +5,7 @@ const mongoose   = require('mongoose');
 const bodyParser = require('body-parser');
 const cors       = require('cors');
 const session    = require('express-session');
-
+const mysql      = require('mysql');
 
 //File uploads
 var multer  =   require('multer');
@@ -26,6 +26,10 @@ mongoose.connect("mongodb://localhost/roadToSuccess", {useMongoClient: true})
         .catch( err => { //Check for db errors
             console.log(`There is an error: ${err}`);
         });
+
+
+// MySQL Connection
+global.db = require('./db');
 
 
 // Create express server

@@ -12,7 +12,7 @@ router.get('/bundels', API.interviewedLocation);
 router.get('/:id', API.listInProvince);
 router.get('/bundel/:id', API.showBundel);
 router.get('/pages', API.listOfPages);
-
+router.get('/settings', API.getSettings);
 
 
 

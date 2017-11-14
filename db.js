@@ -1,13 +1,13 @@
-// var mysql = require('mysql');
-// var connection = mysql.createPool({
-//     host:'localhost',
-//     user:'root',
-//     password:'',
-//     database:'road'
-// });
-// module.exports = connection;
+var mysql = require('mysql');
+var connection = mysql.createPool({
+    host:'localhost',
+    user:'root',
+    password:'1234',
+    database:'road'
+});
+module.exports = connection;
 
-//
+
 //
 // con.connect(function(err) {
 //     return;
