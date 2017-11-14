@@ -81,7 +81,7 @@ const showMedia = (req ,res)=>{
 }
 
 // bundle display
-const bundleDisplayer = (req ,res)=>{
+const bundles = (req ,res)=>{
     if( req.userAuth('/admin/login') ) return;
     res.render('admin/bundleDisplay');
 }
@@ -95,5 +95,5 @@ module.exports = {
     showImage:showImage,
     deleteImage:deleteImage,
     showMedia:showMedia,
-    bundleDisplayer:bundleDisplayer
+    bundles: bundles
 };

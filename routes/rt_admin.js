@@ -33,6 +33,7 @@ router.post('/setting', Site.save);
 router.post('/bundel', Pages.makeBundel);
 router.get('/bundel', Pages.viewBundel);
 router.get('/', Pages.admDashboard);
+router.get('/bundels', Pages.bundles )
 
 //Media manager Routes
 router.get('/bundel/files', Pages.showImage);
@@ -42,6 +43,6 @@ router.post('/bundel/delete_file', Pages.deleteImage)
 router.get('/media', Pages.showMedia)
 
 //Bundle display
-router.get('/bundle/display', Pages.bundleDisplayer )
+
 
 module.exports = router;
