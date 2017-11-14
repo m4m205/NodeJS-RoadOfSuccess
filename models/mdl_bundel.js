@@ -31,6 +31,10 @@ const bundelSchema = mongoose.Schema({
     udateAt:{
         type: Date,
         required: false
+    },
+    language: {
+      type: String,
+      required: true
     }
 
 });

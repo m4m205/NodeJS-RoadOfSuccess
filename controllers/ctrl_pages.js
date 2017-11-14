@@ -61,10 +61,13 @@ const makeBundel = (req , res ) => {
       name:         req.body.bundelName,
       bundelEditor: req.body.bundelEditor ,
       publish_date: req.body.publishDate,
-      frontEndDesc: req.body.frontEndDesc
+      frontEndDesc: req.body.frontEndDesc,
+      province:     req.body.province,
+      language:     req.body.language
     });
-   console.log(newBundel);
+
     newBundel.save().then(newBundel=>{
+      console.log(newBundel)
     })
     .catch(err=>{
       res.end('You have error in making bundel!!!')

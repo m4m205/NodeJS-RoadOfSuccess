@@ -8,10 +8,10 @@ const Site  = require('../controllers/ctrl_site');
 
 
 // User Operations
-router.get('/', API.interviewedLocation);
+router.get('/bundels', API.interviewedLocation);
 router.get('/:id', API.listInProvince);
-router.post('/:id', API.showBundel);
-
+router.get('/bundel/:id', API.showBundel);
+router.get('/pages', API.listOfPages);
 
 
 

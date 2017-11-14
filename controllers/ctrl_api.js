@@ -37,9 +37,14 @@ const showBundel= (req , res ) => {
 
 }
 
+const listOfPages= (req , res ) => {
+
+}  
+
 module.exports = {
   showBundel: showBundel,
   listInProvince: listInProvince,
-  interviewedLocation:interviewedLocation
+  interviewedLocation:interviewedLocation,
+  listOfPages: listOfPages
 
 }
