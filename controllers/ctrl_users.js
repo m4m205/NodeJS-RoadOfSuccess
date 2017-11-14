@@ -70,7 +70,9 @@ var editValidate = () => {
             check('name', 'Please enter your full name.').not().isEmpty(),
             check('email', 'Your email is not valid').isEmail(),
             check('email', 'This email is already exist, try another one.')
-                  .custom( (value, {req}) => User.getByEmailButNotSameId(value, req.params.id).then(user => !user)),
+                   .custom( (value, {req}) =>
+                    User.find({$and: [{ email: value },{_id:{'$ne':req.params.id }} ]
+                  }).then(user =>  !user[0] )),
             check('passwd', 'Your password should be between 6 and 16 chars.')
                   .trim().custom( value => {
                       let len = value.length;
@@ -121,7 +123,8 @@ const edit = ( req, res ) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-        User.findById(req.params.id)
+
+      return User.findById(req.params.id)
             .then( user => {
                 let data = {
                     errors: errors.array(),
@@ -155,6 +158,7 @@ const edit = ( req, res ) => {
             email:  req.body.email
         };
         User.findByIdAndUpdate( req.params.id, record )
+
              .then( result => {
                  req.setFlash('success', [{'msg': 'Your information has been submitted successfully.'}]);
                  res.redirect('/admin/user/' + req.params.id);

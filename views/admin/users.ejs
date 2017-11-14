@@ -24,7 +24,7 @@
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-md-12">
-									<form class="form-horizontal" action="/admin/user<%= !!locals.item ? '/' + item.user_id : '' %>" method="post">
+									<form class="form-horizontal" action="/admin/user<%= !!locals.item ? '/' + item._id : '' %>" method="post">
 										<div class="form-group">
 											<label for="name">Admin Name</label>
 											<input type="text" class="form-control" id="name" name="name" value="<%= (!!locals.item ? item.name : (!!locals.request ? request.name:'') ) %>">
