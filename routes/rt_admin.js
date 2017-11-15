@@ -21,6 +21,8 @@ router.get('/user/:id',  Users.edtForm);
 router.post('/user/:id', Users.editValidate, Users.edit);
 router.get('/users',     Users.admList);
 
+
+
 // Pages Operations
 router.get('/media',     Pages.showMedia);
 
@@ -30,10 +32,12 @@ router.get('/setting', Site.admSetting);
 router.post('/setting', Site.save);
 
 // Dashboard
+router.get('/bundel/delete/:id', Pages.remove);
 router.post('/bundel', Pages.makeBundel);
 router.get('/bundel', Pages.viewBundel);
 router.get('/', Pages.admDashboard);
 router.get('/bundels', Pages.bundles )
+
 
 //Media manager Routes
 router.get('/bundel/files', Pages.showImage);

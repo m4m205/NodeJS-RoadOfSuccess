@@ -29,7 +29,7 @@ const bundelsLocationAndName= (req , res ) => {
 
 const listInProvince= (req , res ) => {
     // id of the province
-    bundel.find({province:req.params.id }).then(result =>{
+    bundel.find({province:req.params.id }).select(' -bundelEditor').then(result =>{
       res.json(result)
     }).catch(err=>{
       res.end('You have error in list province!!!')

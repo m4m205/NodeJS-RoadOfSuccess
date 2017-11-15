@@ -83,8 +83,26 @@ const showMedia = (req ,res)=>{
 // bundle display
 const bundles = (req ,res)=>{
     if( req.userAuth('/admin/login') ) return;
-    res.render('admin/bundleDisplay');
+
+    bundel.find({}).select(' -bundelEditor').then(result=>{
+      res.render('admin/bundleDisplay' , {result} );
+    }).catch(err =>{
+      res.json(err)
+      console.log(err + "error in show bundels list");
+    })
+
 }
+
+// remove bundel
+const remove = ( req, res ) => {
+    if( req.userAuth('/admin/login') ) return;
+
+    bundel.findByIdAndRemove(req.params.id)
+        .then( list => {
+            res.redirect('/admin/bundels');
+        })
+        .catch( err => console.log(err) );
+};
 
 
 
@@ -95,5 +113,6 @@ module.exports = {
     showImage:showImage,
     deleteImage:deleteImage,
     showMedia:showMedia,
-    bundles: bundles
+    bundles: bundles,
+    remove: remove
 };

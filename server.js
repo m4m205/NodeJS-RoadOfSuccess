@@ -7,7 +7,8 @@ const cors       = require('cors');
 const session    = require('express-session');
 const mysql      = require('mysql');
 
-//File uploads
+
+//File uploads sharile
 var multer  =   require('multer');
 var fs = require('fs')
 var crypto = require('crypto');
@@ -35,25 +36,28 @@ global.db = require('./db');
 // Create express server
 const app = express();
 
+
 //Adding config multer
 //folder public/upload for uploading file
-var storage = multer.diskStorage({
-  destination: 'public/upload/',
-  filename: function (req, file, cb) {
-    crypto.pseudoRandomBytes(16, function (err, raw) {
-      if (err) return cb(err)
-      cb(null, Math.floor(Math.random()*9000000000) + 1000000000 + path.extname(file.originalname))
-    })
-  }
-})
-var upload = multer({ storage: storage });
+// var storage = multer.diskStorage({
+//   destination: 'public/upload/',
+//   filename: function (req, file, cb) {
+//     crypto.pseudoRandomBytes(16, function (err, raw) {
+//       if (err) return cb(err)
+//       cb(null, Math.floor(Math.random()*9000000000) + 1000000000 + path.extname(file.originalname))
+//     })
+//   }
+// })
+// var upload = multer({ storage: storage });
 
 // Load Views
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
+
 // Define a static folder path
 app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Parse posted data - Middelware
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -74,10 +78,15 @@ app.use(session({
 app.use('*', core.pathUserSession);
 
 //upload image to the folder upload
-app.post('/admin/bundel/upload', upload.array('flFileUpload', 12), function (req, res, next) {
-    if( req.userAuth('/admin/login') ) return;
-    res.redirect('back')
-});
+// app.post('/admin/bundel/upload', upload.array('flFileUpload', 12), function (req, res, next) {
+//     if( req.userAuth('/admin/login') ) return;
+//     res.redirect('back')
+// });
+
+// file manager
+
+app.use('/admin/filemanager', require('./node_modules/rich-filemanager/connectors/nodejs/filemanager')(path.normalize(`${__dirname}/public`)));
+
 
 // Routes
 app.use('/admin', require('./routes/rt_admin'));
