@@ -67,7 +67,7 @@ const makeBundel = (req , res ) => {
     });
 
     newBundel.save().then(newBundel=>{
-      console.log(newBundel)
+        res.redirect('/admin/bundels')
     })
     .catch(err=>{
       res.end('You have error in making bundel!!!')
