@@ -1,4 +1,5 @@
 const bundel = require('../models/mdl_bundel');
+const makepage  = require('../models/mdl_page');
 const {check, validationResult} = require('express-validator/check');
 
 var fs = require('fs');
@@ -9,6 +10,16 @@ var fs = require('fs');
 const admDashboard = ( req, res ) => {
     if( req.userAuth('/admin/login') ) return;
     res.render('admin/dashboard');
+};
+
+// Validation for adding pages
+var validatePage = () => {
+    return [
+            check('language', 'Please enter the language.').not().isEmpty(),
+            check('titleName', 'Please enter the title.').not().isEmpty(),
+            check('slugName', 'Please enter the slug').not().isEmpty(),
+            check('pageEditor', 'Your some value in the page editor.').not().isEmpty()
+        ];
 };
 
 // const viewBundel = (req , res ) => {
@@ -74,6 +85,37 @@ const makeBundel = (req , res ) => {
     })
 }
 
+//make Page and save it into the database
+const makePages = (req, res) =>{
+  if( req.userAuth('/admin/login') ) return;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let data = {
+        errors: errors.array()
+    };
+    res.render('admin/addPages', data)
+  }
+  else{
+
+    let newPage = new makepage({
+      language : req.body.language,
+      titleName : req.body.titleName,
+      slugName : req.body.slugName,
+      pageEditor : req.body.pageEditor
+    });
+    newPage.save().then(newPagel =>{
+      console.log(newPagel);
+      req.setFlash('success', [{'msg': 'Your information has been submitted successfully.'}]);
+      res.redirect('/admin/dynamicPage')
+    })
+    .catch(err =>{
+      res.end('You have error in making the page')
+    })
+
+  }
+
+}
+
 // show Media
 const showMedia = (req ,res)=>{
     if( req.userAuth('/admin/login') ) return;
@@ -87,6 +129,15 @@ const bundles = (req ,res)=>{
 }
 
 
+const showPages = (req ,res)=>{
+    if( req.userAuth('/admin/login') ) return;
+    res.render('admin/pages');
+}
+
+const addDynamicPages = (req, res)=>{
+  if( req.userAuth('/admin/login') ) return;
+  res.render('admin/addPages', {success: req.getFlash('success')})
+}
 
 module.exports = {
     admDashboard: admDashboard,
@@ -95,5 +146,9 @@ module.exports = {
     showImage:showImage,
     deleteImage:deleteImage,
     showMedia:showMedia,
-    bundles: bundles
+    bundles: bundles,
+    showPages:showPages,
+    addDynamicPages:addDynamicPages,
+    makePages:makePages,
+    validatePage:validatePage()
 };

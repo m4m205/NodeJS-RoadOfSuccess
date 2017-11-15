@@ -1,0 +1,56 @@
+<%- include('../includes/admin/header',{page_title: 'User Managment'}); %>
+
+
+      <script src="/ckeditor/ckeditor.js"></script>
+      <!-- <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script> -->
+
+
+      <!-- <script src="//cdn.ckeditor.com/4.7.3/full/ckeditor.js"></script> -->
+
+
+			<!-- /col-3 -->
+  			<div class="col-sm-9">
+
+
+					<div class="col-md-12">
+
+            <h3>Page Displayer</h3>
+            <a href="/admin/pages" class="btn btn-primary">button</a>
+
+            <%- include('../includes/admin/message'); %>
+
+              <h3>Create a Page:</h3>
+              <form class="form-horizontal" method="post" action="/admin/makePage" name="pageName">
+
+
+                <h4>Select a language</h4>
+                <select class="form-group" required="true" name="language">
+                  <option>English</option>
+                  <option>Dutch</option>
+                  <option>Romanian</option>
+                </select>
+
+                <h4>Title</h4>
+                <input class="form-group" name="titleName" type="text"/>
+                <br />
+
+                <h4>Slug</h4>
+                <input class="form-group" name="slugName" type="text"/>
+
+
+                <textarea name="pageEditor" id="editor1" > </textarea>
+
+                <input class="form-group" type="submit" name="Submit" class="btn btn-success" />
+              </form>
+
+              <script type="text/javascript">
+              CKEDITOR.replace('editor1', {
+                "extraPlugins" : 'imagebrowser',
+            		"imageBrowser_listUrl" : "/admin/bundel/files"
+              });
+            </script>
+					</div>
+        </div>
+
+
+<%- include('../includes/admin/footer'); %>

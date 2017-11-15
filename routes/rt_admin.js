@@ -42,6 +42,11 @@ router.post('/bundel/delete_file', Pages.deleteImage)
 //Media display
 router.get('/media', Pages.showMedia)
 
+//Dynamic pages view
+router.get('/pages', Pages.showPages)
+router.get('/dynamicPage', Pages.addDynamicPages)
+router.post('/makePage', Pages.validatePage ,Pages.makePages)
+
 //Bundle display
 
 
