@@ -85,7 +85,7 @@ app.use('*', core.pathUserSession);
 
 // file manager
 
-app.use('/admin/filemanager', require('./node_modules/rich-filemanager/connectors/nodejs/filemanager')(path.normalize(`${__dirname}/public`)));
+// app.use('/admin/filemanager', require('./node_modules/rich-filemanager/connectors/nodejs/filemanager')(path.normalize(`${__dirname}/public`)));
 
 
 // Routes

@@ -6,7 +6,7 @@
 					<strong><i class="glyphicon glyphicon-user"></i> Users</strong>
 					<% if( !locals.list ) { %>
 						<a href="/admin/users" class="btn btn-primary btn-sm pull-right">List</a>
-						<% if( !!locals.item ) { %>
+						<% if( locals.item ) { %>
 						<a href="/admin/user" class="btn btn-primary btn-sm pull-right">Add New</a>
 						<% } %>
 					<% } else { %>

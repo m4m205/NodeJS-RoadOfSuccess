@@ -33,6 +33,8 @@ router.post('/setting', Site.save);
 
 // Dashboard
 router.get('/bundel/delete/:id', Pages.remove);
+router.get('/bundels/:id',  Pages.showEditBundel);
+router.post('/bundel/:id',  Pages.editBundel);
 router.post('/bundel', Pages.makeBundel);
 router.get('/bundel', Pages.viewBundel);
 router.get('/', Pages.admDashboard);

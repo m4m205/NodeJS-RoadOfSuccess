@@ -84,7 +84,7 @@ const showMedia = (req ,res)=>{
 const bundles = (req ,res)=>{
     if( req.userAuth('/admin/login') ) return;
 
-    bundel.find({}).select(' -bundelEditor').then(result=>{
+    bundel.find({}).select(' -bundelEditor').sort('-createAt').then(result=>{
       res.render('admin/bundleDisplay' , {result} );
     }).catch(err =>{
       res.json(err)
@@ -104,8 +104,43 @@ const remove = ( req, res ) => {
         .catch( err => console.log(err) );
 };
 
+// edit a bundel
+const showEditBundel = (req , res) => {
+    if( req.userAuth('/admin/login') ) return;
+
+    if( req.params.id ){
+        bundel.findById(req.params.id)
+            .then( oneBundel => {
+                res.render('admin/bundel', {success: req.getFlash('success'),'item': oneBundel } );
+            })
+            .catch( err => console.log(err) );
+    } else
+        res.render('admin/bundels', {success: req.getFlash('success')});
+
+}
+
+const editBundel = (req , res) => {
+    if( req.userAuth('/admin/login') ) return;
+        let record = {
+          name:         req.body.bundelName,
+          bundelEditor: req.body.bundelEditor ,
+          publish_date: req.body.publishDate,
+          frontEndDesc: req.body.frontEndDesc,
+          province:     req.body.province,
+          language:     req.body.language,
+          udateAt:      Date.now()
+        };
 
 
+
+    bundel.findByIdAndUpdate( req.params.id, record )
+          .then( result => {
+              req.setFlash('success', [{'msg': 'Your information has been submitted successfully.'}]);
+              res.redirect('/admin/bundel');
+          })
+          .catch( err => console.log(err) );
+
+}
 module.exports = {
     admDashboard: admDashboard,
     viewBundel: viewBundel,
@@ -114,5 +149,7 @@ module.exports = {
     deleteImage:deleteImage,
     showMedia:showMedia,
     bundles: bundles,
-    remove: remove
+    remove: remove,
+    showEditBundel: showEditBundel,
+    editBundel: editBundel
 };

@@ -13,13 +13,13 @@
             <a href="/admin/bundels" class="btn btn-primary btn-sm pull-right">Back to list</a>
 
               <h3>Create a Bundel:</h3>
-              <form class="form-horizontal" method="post" action="/admin/bundel" name="bundel">
+              <form class="form-horizontal" method="post" action="/admin/bundel<%= !!locals.item ? '/' + item._id : '' %>" name="bundel">
                 <h4>Name of the bundel</h4>
-                <input class="form-group" name="bundelName" type="text"/>
+                <input class="form-group" name="bundelName" type="text" value="<%= (locals.item ? item.name : "" ) %>" />
                 <h4>Short Description</h4>
-                <input class="form-group" name="frontEndDesc" type="text"/>
+                <input class="form-group" name="frontEndDesc" type="text" value="<%= (locals.item ? item.frontEndDesc : "" ) %>" />
                 <br />
-                <select class="form-group" required="true" name="province">
+                <select class="form-group" required="true" name="province" value="<%= (locals.item ? item.province : "") %>"   >
                   <option>Drenthe</option>
                   <option>Flevoland</option>
                   <option>Friesland</option>
@@ -34,7 +34,7 @@
                   <option>Zeeland</option>
                 </select>
                 <h4>Publish date</h4>
-                <input name="publishDate" type="date"/>
+                <input name="publishDate" type="date" value="<%= (locals.item ? item.publish_date : "" ) %>"/>
 
                 <h4>Select a language</h4>
                 <select class="form-group" required="true" name="language">
@@ -42,9 +42,9 @@
                   <option>Dutch</option>
                   <option>Romanian</option>
                 </select>
-                <textarea name="bundelEditor"id="editor1" > </textarea>
+                <textarea name="bundelEditor" id="editor1" value="<%= (locals.item ? item.bundelEditor : "" ) %>" > </textarea>
 
-                <input class="form-group" type="submit" name="Submit" class="btn btn-success" />
+                <input  type="submit" name="Submit" class="btn btn-success" />
               </form>
 
               <script type="text/javascript">
