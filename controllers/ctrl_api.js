@@ -3,19 +3,28 @@ const bundel = require('../models/mdl_bundel');
 
 
 const bundelsLocationAndName= (req , res ) => {
-      let provinceList = [{ province: 'Zeeland',names:[] },{province:'Utrecht',names:[]},{province:'Gelderland',names:[]} ];
-      // bundel.find({}).select('province -_id').then(result=> {
-          let dataToSend=[];
-          provinceList.forEach(function(item){
-            item.names=  bundel.find({province: item.province}).select('name -_id').then(name=> console.log(name))
-              // dataToSend.push(bundel.find(item).select('name -_id'));
+      var provinceList = [{ province: 'Zeeland',count:[] }, {province:'Utrecht',count:[]},
+                          {province:'South Holland',count:[]}, {province:'Overijssel',count:[]},
+                          {province:'North Holland',count:[]}, {province:'North Brabant',count:[]},
+                          {province:'Limburg',count:[]}, {province:'Groningen',count:[]},
+                          {province:'Gelderland',count:[]}, {province:'Friesland',count:[]},
+                          {province:'Flevoland',count:[]}, {province:'Drenthe',count:[]}
+                        ];
 
+          var dataNotSend=[];
+          provinceList.forEach(function(item, index){
+            var temp =  new Promise( (resolve, reject) => {
+                bundel.find({province: item.province}).select('name -_id').then(name=>{
+                      provinceList[index].count = name.length ;
+                      resolve(1);
+                })
+              });
+              dataNotSend.push(temp);
           })
-          
-          Promise.all( provinceList ).then(res.json(provinceList))
-      // }).catch(err=>{
-      //   res.end('You have error in list of locations!!!')
-      // })
+          Promise.all( dataNotSend ).then(() => {res.json(provinceList)})
+        .catch(err=>{
+        res.end('You have error in list of locations!!!')
+      })
 }
 
 const listInProvince= (req , res ) => {
