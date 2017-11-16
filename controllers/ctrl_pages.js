@@ -56,7 +56,7 @@ const viewBundel = (req , res ) => {
 
 const makeBundel = (req , res ) => {
     if( req.userAuth('/admin/login') ) return;
-
+    
     let newBundel = new bundel({
       name:         req.body.bundelName,
       bundelEditor: req.body.bundelEditor ,
