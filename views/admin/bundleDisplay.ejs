@@ -22,7 +22,7 @@
                     <tr>
                       <th scope="row"><%=  ++row %></th>
                       <td><%= item.name %></td>
-                      <td><%= item.publish_date %></td>
+                      <td><%= item.publishDate %></td>
                       <td><%= item.language %></td>
                       <td class="text-right">
                         <a class="options" href="/admin/bundels/<%= item._id %>">
@@ -33,6 +33,7 @@
                       </td>
                     </tr>
                     <% }); %>
+
                   </tbody>
                 </table>
               </div>

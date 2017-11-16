@@ -60,7 +60,7 @@ const makeBundel = (req , res ) => {
     let newBundel = new bundel({
       name:         req.body.bundelName,
       bundelEditor: req.body.bundelEditor ,
-      publish_date: req.body.publishDate,
+      publishDate: req.body.publishDate,
       frontEndDesc: req.body.frontEndDesc,
       province:     req.body.province,
       language:     req.body.language
@@ -124,11 +124,11 @@ const editBundel = (req , res) => {
         let record = {
           name:         req.body.bundelName,
           bundelEditor: req.body.bundelEditor ,
-          publish_date: req.body.publishDate,
+          publishDate: req.body.publishDate,
           frontEndDesc: req.body.frontEndDesc,
           province:     req.body.province,
           language:     req.body.language,
-          udateAt:      Date.now()
+          udateAt:       Date(Date.now())
         };
 
 

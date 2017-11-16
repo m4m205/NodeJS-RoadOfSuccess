@@ -3,18 +3,31 @@ const bundel = require('../models/mdl_bundel');
 
 
 const bundelsLocationAndName= (req , res ) => {
-      var provinceList = [{ province: 'Zeeland',count:[] }, {province:'Utrecht',count:[]},
+      let provinceList = [{ province: 'Zeeland',count:[] }, {province:'Utrecht',count:[]},
                           {province:'South Holland',count:[]}, {province:'Overijssel',count:[]},
                           {province:'North Holland',count:[]}, {province:'North Brabant',count:[]},
                           {province:'Limburg',count:[]}, {province:'Groningen',count:[]},
                           {province:'Gelderland',count:[]}, {province:'Friesland',count:[]},
                           {province:'Flevoland',count:[]}, {province:'Drenthe',count:[]}
                         ];
+      let selectedLanguage = '';
+
+        switch (req.params.lang) {
+          case 'NL':
+              selectedLanguage= 'Dutch'
+            break;
+          case 'RO':
+              selectedLanguage= 'Romanian'
+            break;
+          default:
+              selectedLanguage= 'English'
+        }
 
           var dataNotSend=[];
           provinceList.forEach(function(item, index){
             var temp =  new Promise( (resolve, reject) => {
-                bundel.find({province: item.province}).select('name -_id').then(name=>{
+                bundel.find({$and:[{province: item.province},{language:selectedLanguage}]})
+                .select('name -_id').then(name=>{
                       provinceList[index].count = name.length ;
                       resolve(1);
                 })
@@ -29,8 +42,21 @@ const bundelsLocationAndName= (req , res ) => {
 
 const listInProvince= (req , res ) => {
     // id of the province
-    bundel.find({province:req.params.id }).select(' -bundelEditor').then(result =>{
-      res.json(result)
+    let selectedLanguage = '';
+
+      switch (req.params.lang) {
+        case 'NL':
+            selectedLanguage= 'Dutch'
+          break;
+        case 'RO':
+            selectedLanguage= 'Romanian'
+          break;
+        default:
+            selectedLanguage= 'English'
+      }
+
+    bundel.find({$and:[{province:req.params.id }, {language:selectedLanguage}]}).select(' -bundelEditor')
+    .then(result =>{ res.json(result)
     }).catch(err=>{
       res.end('You have error in list province!!!')
     })
