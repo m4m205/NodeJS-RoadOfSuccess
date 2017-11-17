@@ -1,33 +1,20 @@
 const express = require('express');
 const router  = express.Router();
 
-
 // Load Controllers
-const API = require('../controllers/ctrl_api');
-const Site  = require('../controllers/ctrl_site');
+const Site    = require('../controllers/ctrl_site');
+const Bundels = require('../controllers/ctrl_bundels');
+const Pages   = require('../controllers/ctrl_pages');
 
+// Setting
+router.get('/settings', Site.getSettings);
 
-// User Operations
-router.get('/bundel/:id', API.showBundel);
-router.get('/bundels/:lang', API.bundelsLocationAndName);
-router.get('/:id/:lang', API.listInProvince);
-router.get('/pages', API.listOfPages);
-router.get('/settings', API.getSettings);
+// Pages
+router.get('/pages/:lang', Pages.apiGetPages);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// Bundels
+router.get('/bundel/:id', Bundels.api_showBundel);
+router.get('/bundels/:lang', Bundels.api_bundelsLocationAndName);
+router.get('/bundel/:id/:lang', Bundels.api_listInProvince);
 
 module.exports = router;

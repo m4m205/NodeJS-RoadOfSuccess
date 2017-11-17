@@ -16,7 +16,7 @@ const bundelSchema = mongoose.Schema({
         required: true
     },
     publishDate:{
-        type: String,
+        type: Date,
         required: true
     },
     createAt:{
@@ -33,6 +33,14 @@ const bundelSchema = mongoose.Schema({
         required: false
     },
     language: {
+      type: String,
+      required: true
+    },
+    audio: {
+      type: String,
+      required: true
+    },
+    mainImage: {
       type: String,
       required: true
     }

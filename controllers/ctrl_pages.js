@@ -1,155 +1,151 @@
-const bundel = require('../models/mdl_bundel');
+const makepage  = require('../models/mdl_page');
 const {check, validationResult} = require('express-validator/check');
 
-var fs = require('fs');
 
+const browser = ( req, res ) => {
+    if( req.userAuth('/admin/login') ) return;
+    res.render('admin/browser');
+};
 
-// const filemanager = require ('../filemanager.config.json')
+const admMedia = ( req, res ) => {
+    if( req.userAuth('/admin/login') ) return;
+    res.render('admin/medias');
+};
 
 const admDashboard = ( req, res ) => {
     if( req.userAuth('/admin/login') ) return;
-    res.render('admin/dashboard');
+    res.redirect('/admin/bundels');
 };
 
-// const viewBundel = (req , res ) => {
-//     if( req.userAuth('/admin/login') ) return;
-//     var title = "Plugin Imagebrowser ckeditor for nodejs"
-//     res.render('admin/bundel', { result: 'result' })
-// }
 
-//show all the images in upload to json
-const showImage = (req , res ) => {
-    const images = fs.readdirSync('public/upload')
-    var sorted = []
-    for (let item of images){
-        if(item.split('.').pop() === 'png'
-        || item.split('.').pop() === 'jpg'
-        || item.split('.').pop() === 'jpeg'
-        || item.split('.').pop() === 'svg'){
-            var abc = {
-                  "image" : "/upload/"+item,
-                  "folder" : '/'
-            }
-            sorted.push(abc)
-        }
-    }
-    res.send(sorted);
-}
+// Validation for adding pages
+var validatePage = () => {
+    return [
+            check('language', 'Please enter the language.').not().isEmpty(),
+            check('titleName', 'Please enter the title.').not().isEmpty(),
+            check('slugName', 'Please enter the slug').not().isEmpty(),
+            check('pageEditor', 'Your some value in the page editor.').not().isEmpty()
+        ];
+};
 
-//To delete all the images
-const deleteImage = (req , res, next ) => {
-  var url_del = 'public' + req.body.url_del
-  console.log(url_del)
-  if(fs.existsSync(url_del)){
-    fs.unlinkSync(url_del)
+//make Page and save it into the database
+const makePages = (req, res) =>{
+  if( req.userAuth('/admin/login') ) return;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    let data = {
+        errors: errors.array()
+    };
+    res.render('admin/addPages', data)
   }
-  res.redirect('back');
+  else{
 
-}
-
-const viewBundel = (req , res ) => {
-    if( req.userAuth('/admin/login') ) return;
-    var title = "Plugin Imagebrowser ckeditor for nodejs"
-    res.render('admin/bundel', { result: 'result' })
-}
-
-
-const makeBundel = (req , res ) => {
-    if( req.userAuth('/admin/login') ) return;
-    
-    let newBundel = new bundel({
-      name:         req.body.bundelName,
-      bundelEditor: req.body.bundelEditor ,
-      publishDate: req.body.publishDate,
-      frontEndDesc: req.body.frontEndDesc,
-      province:     req.body.province,
-      language:     req.body.language
+    let newPage = new makepage({
+      language : req.body.language,
+      titleName : req.body.titleName,
+      slugName : req.body.slugName.replace(/\s+/g, '-').toLowerCase(),
+      pageEditor : req.body.pageEditor
     });
+    newPage.save().then(newPagel =>{
+      req.setFlash('success', [{'msg': 'Your information has been submitted successfully.'}]);
+      res.redirect('/admin/dynamicPage')
+    })
+    .catch(err =>{
+      res.end('You have error in making the page')
+    })
 
-    newBundel.save().then(newBundel=>{
-        res.redirect('/admin/bundels')
+  }
+
+}
+
+const showPages = (req ,res)=>{
+    if( req.userAuth('/admin/login') ) return;
+    makepage.find({})
+    .then(item=>{
+    res.render('admin/pages', {listItems : item, success: req.getFlash('success')});
     })
     .catch(err=>{
-      res.end('You have error in making bundel!!!')
+      res.end('there is error');
     })
 }
 
-// show Media
-const showMedia = (req ,res)=>{
-    if( req.userAuth('/admin/login') ) return;
-    res.render('admin/media');
+const addDynamicPages = (req, res)=>{
+  if( req.userAuth('/admin/login') ) return;
+  res.render('admin/addPages', {success: req.getFlash('success')})
 }
 
-// bundle display
-const bundles = (req ,res)=>{
-    if( req.userAuth('/admin/login') ) return;
-
-    bundel.find({}).select(' -bundelEditor').sort('-createAt').then(result=>{
-      res.render('admin/bundleDisplay' , {result} );
-    }).catch(err =>{
-      res.json(err)
-      console.log(err + "error in show bundels list");
-    })
-
+const deletePage = (req,res) =>{
+  if( req.userAuth('/admin/login') ) return;
+  makepage.findByIdAndRemove(req.params.id)
+      .then( list => {
+          res.redirect('/admin/pages');
+      })
+      .catch( err => console.log(err) );
 }
 
-// remove bundel
-const remove = ( req, res ) => {
-    if( req.userAuth('/admin/login') ) return;
-
-    bundel.findByIdAndRemove(req.params.id)
-        .then( list => {
-            res.redirect('/admin/bundels');
-        })
-        .catch( err => console.log(err) );
-};
-
-// edit a bundel
-const showEditBundel = (req , res) => {
-    if( req.userAuth('/admin/login') ) return;
-
-    if( req.params.id ){
-        bundel.findById(req.params.id)
-            .then( oneBundel => {
-                res.render('admin/bundel', {success: req.getFlash('success'),'item': oneBundel } );
-            })
-            .catch( err => console.log(err) );
-    } else
-        res.render('admin/bundels', {success: req.getFlash('success')});
-
+const editPage = (req,res) =>{
+  if( req.userAuth('/admin/login') ) return;
+  makepage.findById(req.params.id)
+  .then(
+    result => {
+      req.setFlash('success', [{'msg': 'Your information has been submitted successfully.'}])
+      res.render('admin/pages', {pageResult : result})
+    }
+  )
 }
 
-const editBundel = (req , res) => {
-    if( req.userAuth('/admin/login') ) return;
-        let record = {
-          name:         req.body.bundelName,
-          bundelEditor: req.body.bundelEditor ,
-          publishDate: req.body.publishDate,
-          frontEndDesc: req.body.frontEndDesc,
-          province:     req.body.province,
-          language:     req.body.language,
-          udateAt:       Date(Date.now())
+const editPage2 = (req,res)=>{
+  if( req.userAuth('/admin/login') ) return;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    makepage.findById(req.params.id)
+    .then(
+      result => {
+        let data = {
+            errors: errors.array(),
+            pageResult : result
         };
-
-
-
-    bundel.findByIdAndUpdate( req.params.id, record )
-          .then( result => {
-              req.setFlash('success', [{'msg': 'Your information has been submitted successfully.'}]);
-              res.redirect('/admin/bundel');
-          })
-          .catch( err => console.log(err) );
-
+        res.render('admin/pages', data)
+      }
+    )
+  }
+  else{
+    let record = {
+      language : req.body.language,
+      titleName : req.body.titleName,
+      slugName : req.body.slugName.replace(/\s+/g, '-').toLowerCase(),
+      pageEditor : req.body.pageEditor
+    };
+    makepage.findByIdAndUpdate( req.params.id, record, {new: true}  ).then( rec => {
+      data = {
+        success: req.getFlash('success'),
+        pageResult : rec
+      }
+      res.render('admin/pages', data );
+    }).catch( err => console.log(err) );
+  }
 }
+
+
+const apiGetPages = (req ,res)=>{
+    makepage.find({language: req.params.lang}).select('titleName slugName -_id')
+            .then(item=>{
+                res.json(item);
+            })
+    .catch( err=> console.log(err) );
+}
+
 module.exports = {
+    admMedia: admMedia,
+    browser:  browser,
     admDashboard: admDashboard,
-    viewBundel: viewBundel,
-    makeBundel: makeBundel,
-    showImage:showImage,
-    deleteImage:deleteImage,
-    showMedia:showMedia,
-    bundles: bundles,
-    remove: remove,
-    showEditBundel: showEditBundel,
-    editBundel: editBundel
+    apiGetPages: apiGetPages,
+
+    showPages:showPages,
+    addDynamicPages:addDynamicPages,
+    makePages:makePages,
+    validatePage:validatePage(),
+    deletePage:deletePage,
+    editPage:editPage,
+    editPage2:editPage2
 };

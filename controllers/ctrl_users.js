@@ -2,7 +2,6 @@ const User = require('../models/mdl_user');
 const {check, validationResult} = require('express-validator/check');
 const bcrypt = require('bcryptjs');
 
-
 // Validation for login
 const validateLogin = () => {
     return [
@@ -29,9 +28,9 @@ const doLogin = ( req, res ) => {
         return res.render('admin/login', {errors: errors.array()});
     }
 
+    // User.getByEmail(req.body.email).then(user => {
     User.findOne({email: req.body.email}).then(user => {
         if(user) {
-
             bcrypt.compare(req.body.passwd, user.password, function(err, result) {
                 if(result) {
                     req.session.user = user;
@@ -53,11 +52,12 @@ const doLogout = (req, res) => {
 };
 
 // Validation To add or edit a user
-var validateRegister = () => {
+var aValidate = () => {
     return [
             check('name', 'Please enter your full name.').not().isEmpty(),
             check('email', 'Your email is not valid').isEmail(),
             check('email', 'Your email is already exist, try another one.')
+                //   .custom(value => User.getByEmail(value).then(user => !user)),
                   .custom(value => User.findOne({email: value}).then(user => !user)),
             check('passwd', 'Your password should be between 6 and 16 chars.')
                   .isLength({ min: 6, max: 16 }),
@@ -65,14 +65,14 @@ var validateRegister = () => {
                   .custom( (value, {req}) => value === req.body.passwd)
         ];
 };
-var editValidate = () => {
+var eValidate = () => {
     return [
             check('name', 'Please enter your full name.').not().isEmpty(),
             check('email', 'Your email is not valid').isEmail(),
-            check('email', 'This email is already exist, try another one.')
-                   .custom( (value, {req}) =>
-                    User.find({$and: [{ email: value },{_id:{'$ne':req.params.id }} ]
-                  }).then(user =>  !user[0] )),
+            check('email', 'Your email is already exist, try another one.')
+                //   .custom( (value, {req}) => User.getByEmailButNotSameId(value, req.params.id).then(user => !user)),
+                  .custom( (value, {req}) => User.find({$and: [{ email: value },{_id:{'$ne':req.params.id }} ]})
+                                                 .then(user => !user[0] )),
             check('passwd', 'Your password should be between 6 and 16 chars.')
                   .trim().custom( value => {
                       let len = value.length;
@@ -123,8 +123,8 @@ const edit = ( req, res ) => {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-
-      return User.findById(req.params.id)
+        // return User.getById(req.params.id)
+        return User.findById(req.params.id)
             .then( user => {
                 let data = {
                     errors: errors.array(),
@@ -142,7 +142,7 @@ const edit = ( req, res ) => {
                 let record = {
                     name:   req.body.name,
                     email:  req.body.email,
-                    passwd: hash
+                    password: hash
                 };
                 User.findByIdAndUpdate( req.params.id, record )
                      .then( result => {
@@ -158,7 +158,6 @@ const edit = ( req, res ) => {
             email:  req.body.email
         };
         User.findByIdAndUpdate( req.params.id, record )
-
              .then( result => {
                  req.setFlash('success', [{'msg': 'Your information has been submitted successfully.'}]);
                  res.redirect('/admin/user/' + req.params.id);
@@ -172,6 +171,7 @@ const admForm = ( req, res ) => {
     if( req.userAuth('/admin/login') ) return;
 
     if( req.params.id ){
+        // User.getById(req.params.id)
         User.findById(req.params.id)
             .then( user => {
                 res.render('admin/users', {success: req.getFlash('success'),'item': user} );
@@ -185,6 +185,7 @@ const admForm = ( req, res ) => {
 const admList = ( req, res ) => {
     if( req.userAuth('/admin/login') ) return;
 
+    // User.getAll(10)
     User.find({})
         .then( list => {
             data = {
@@ -207,18 +208,18 @@ const remove = ( req, res ) => {
         .catch( err => console.log(err) );
 };
 
-
 module.exports = {
     admLogin:  admLogin,
     doLogin:   doLogin,
     doLogout:  doLogout,
     lValidate: validateLogin,
+
     admList:   admList,
     remove:    remove,
     add:       add,
     addForm:   admForm,
-    validateRegister: validateRegister(),
+    aValidate: aValidate(),
     edit:      edit,
     edtForm:   admForm,
-    editValidate: editValidate(),
+    eValidate: eValidate(),
 };
