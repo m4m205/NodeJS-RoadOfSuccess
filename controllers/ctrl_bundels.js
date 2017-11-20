@@ -13,12 +13,15 @@ const makeBundel = (req , res ) => {
     let newBundel = new bundel({
       name:         req.body.bundelName,
       bundelEditor: req.body.bundelEditor ,
-      publishDate: req.body.publishDate,
+      publishDate:  req.body.publishDate,
       frontEndDesc: req.body.frontEndDesc,
+      placeOfBirth: req.body.placeOfBirth,
+      occupation:   req.body.occupation,
       province:     req.body.province,
       language:     req.body.language,
       mainImage:    req.body.mainImage,
-      audio:        req.body.audio
+      audio:        req.body.audio,
+
     });
 
     newBundel.save().then(newBundel=>{
